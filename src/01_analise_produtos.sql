@@ -30,3 +30,30 @@ FROM
 WHERE 
     preco_atual > 500;
 
+
+-- Quais produtos nunca foram vendidos? (Exemplo 15)
+SELECT 
+    p.nome_produto
+FROM 
+    produtos p
+LEFT JOIN   
+    vendas v ON p.id_produto = v.id_produto
+WHERE 
+    v.id_produto IS NULL
+ORDER BY 
+    p.nome_produto;
+
+
+--Classifique os produtos por faixa de preço (Exemplo 7)
+SELECT 
+   nome_produto,
+   categoria,
+   preco_atual,
+CASE 
+    WHEN preco_atual > 1000 THEN 'CARÍSSIMO'
+    WHEN preco_atual > 500 THEN 'CARO'
+    WHEN preco_atual > 250 THEN 'MEDIO'
+    ELSE 'BARATO'
+    END AS classe_preco
+FROM 
+    produtos;
