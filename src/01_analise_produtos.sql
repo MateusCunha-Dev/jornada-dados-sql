@@ -57,3 +57,12 @@ CASE
     END AS classe_preco
 FROM 
     produtos;
+
+
+-- Análise de Preço vs Média Global (Exemplo 12)
+SELECT 
+    nome_produto,
+    preco_atual
+FROM 
+    produtos
+WHERE preco_atual > (SELECT ROUND(AVG(preco_atual)::numeric, 2) FROM produtos);
