@@ -2,7 +2,7 @@
 CREATE OR REPLACE VIEW v_resumo_vendas_produtos AS
 SELECT 
     p.nome_produto,
-    ROUND(SUM(v.quantidade * v.preco_unitario)::numeric, 2) AS receita_total
+    ROUND(SUM(v.quantidade * v.preco_unitario)::NUMERIC, 2) AS receita_total
 FROM 
     vendas v
 JOIN 
@@ -20,7 +20,7 @@ CREATE TABLE t_resumo_categorias AS
 SELECT
     p.categoria,
     COUNT(*) AS qtd_vendas,
-    ROUND(SUM(v.quantidade * v.preco_unitario)::numeric, 2) AS valor_venda
+    ROUND(SUM(v.quantidade * v.preco_unitario)::NUMERIC, 2) AS valor_venda
 FROM 
     vendas v
 JOIN 
@@ -50,7 +50,7 @@ SELECT * FROM v_produtos_caros;
 WITH receita_por_categoria AS (
     SELECT 
         p.categoria,
-        ROUND(SUM(v.quantidade * v.preco_unitario)::numeric, 2) AS receita_cat
+        ROUND(SUM(v.quantidade * v.preco_unitario)::NUMERIC, 2) AS receita_cat
     FROM 
         vendas v
     JOIN 

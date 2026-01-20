@@ -10,8 +10,8 @@ JOIN
     produtos p ON pc.id_produto = p.id_produto
 WHERE 
     pc.preco_concorrente < p.preco_atual
-ORDER 
-    BY pc.preco_concorrente;
+ORDER BY 
+    pc.preco_concorrente;
 
 
 --Qual é a diferença percentual entre nossos preços e dos concorrentes? (Exemplo 16)
@@ -20,7 +20,7 @@ SELECT
     pc.nome_concorrente,
     p.preco_atual AS nosso_preco,
     pc.preco_concorrente AS preco_deles,
-    round(((p.preco_atual - pc.preco_concorrente)/p.preco_atual * 100)::numeric, 2) AS diferenca_percentual,
+    ROUND(((p.preco_atual - pc.preco_concorrente)/p.preco_atual * 100)::NUMERIC, 2) AS diferenca_percentual,
     CASE 
         WHEN p.preco_atual > pc.preco_concorrente THEN 'Mais caro'
         WHEN p.preco_atual = pc.preco_concorrente THEN 'Igual'
@@ -30,14 +30,15 @@ FROM
     preco_competidores pc
 JOIN 
     produtos p ON pc.id_produto = p.id_produto
-ORDER BY diferenca_percentual DESC
+ORDER BY 
+    diferenca_percentual DESC;
 
 
 --Quais produtos estão mais caros que a média dos concorrentes? (Exemplo 13)
 WITH media_concorrentes AS (
     SELECT 
         id_produto,
-        ROUND(AVG(preco_concorrente)::numeric, 2) AS media_preco
+        ROUND(AVG(preco_concorrente)::NUMERIC, 2) AS media_preco
     FROM 
         preco_competidores
     GROUP 
@@ -55,7 +56,7 @@ JOIN
 WHERE 
     p.preco_atual > mc.media_preco
 ORDER BY 
-    preco_atual DESC
+    preco_atual DESC;
 
 
 --Quais produtos top sellers estão mais caros que todos os concorrentes? (Exemplo 18)
@@ -92,4 +93,4 @@ FROM produtos p
     JOIN 
         teto_mercado tm ON p.id_produto = tm.id_produto
 WHERE 
-    p.preco_atual > tm.preco_maximo
+    p.preco_atual > tm.preco_maximo;
